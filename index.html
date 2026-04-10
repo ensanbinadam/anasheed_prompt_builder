@@ -1,0 +1,1686 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>مولّد برومبت الإنشاد الاحترافي | Nasheed Prompt Studio V7.4</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap");
+
+      :root {
+        --bg: #06111b;
+        --bg2: #0b1624;
+        --bg3: #101d2f;
+        --glass: rgba(255, 255, 255, 0.055);
+        --glass-2: rgba(255, 255, 255, 0.035);
+        --line: rgba(255, 255, 255, 0.095);
+        --text: #f8fbff;
+        --muted: #98a9bf;
+        --accent: #00c58e;
+        --accent-2: #29a8ff;
+        --accent-3: #ffca63;
+        --danger: #ff6b6b;
+        --shadow: 0 28px 60px rgba(0, 0, 0, 0.36);
+        --radius: 24px;
+        --radius-md: 18px;
+        --radius-sm: 14px;
+        --ease: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+        scroll-behavior: smooth;
+      }
+      body {
+        margin: 0;
+        font-family:
+          "Tajawal",
+          system-ui,
+          -apple-system,
+          sans-serif;
+        color: var(--text);
+        background:
+          radial-gradient(
+            circle at 12% 0%,
+            rgba(0, 197, 142, 0.18),
+            transparent 30%
+          ),
+          radial-gradient(
+            circle at 88% 24%,
+            rgba(41, 168, 255, 0.16),
+            transparent 26%
+          ),
+          radial-gradient(
+            circle at 52% 100%,
+            rgba(255, 202, 99, 0.1),
+            transparent 40%
+          ),
+          linear-gradient(135deg, var(--bg) 0%, var(--bg2) 48%, var(--bg3) 100%);
+        background-attachment: fixed;
+        line-height: 1.65;
+      }
+
+      ::-webkit-scrollbar {
+        width: 10px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #07101a;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.11);
+        border-radius: 999px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: rgba(255, 255, 255, 0.18);
+      }
+
+      .page {
+        width: min(1720px, calc(100% - 28px));
+        margin: 18px auto 28px;
+      }
+
+      .hero {
+        position: relative;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 32px;
+        padding: 34px 34px 28px;
+        background:
+          linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.06),
+            rgba(255, 255, 255, 0.025)
+          ),
+          linear-gradient(180deg, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.22));
+        backdrop-filter: blur(18px);
+        box-shadow: var(--shadow);
+        margin-bottom: 18px;
+        isolation: isolate;
+      }
+      .hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(
+            circle at 10% 10%,
+            rgba(0, 197, 142, 0.2),
+            transparent 26%
+          ),
+          radial-gradient(
+            circle at 90% 25%,
+            rgba(41, 168, 255, 0.18),
+            transparent 22%
+          ),
+          radial-gradient(
+            circle at 50% 100%,
+            rgba(255, 202, 99, 0.1),
+            transparent 36%
+          );
+        z-index: -1;
+      }
+      .hero-top {
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 18px;
+        align-items: center;
+      }
+      .hero h1 {
+        margin: 0 0 10px;
+        font-size: clamp(2rem, 3.6vw, 3.6rem);
+        font-weight: 900;
+        line-height: 1.08;
+        letter-spacing: -0.6px;
+      }
+      .hero h1 span {
+        background: linear-gradient(90deg, #fff 0%, #bde4ff 35%, #a8ffe4 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      .hero p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 1.04rem;
+        max-width: 950px;
+      }
+      .hero-stats {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+      }
+      .stat {
+        padding: 16px 18px;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.04);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+      }
+      .stat b {
+        display: block;
+        font-size: 1.2rem;
+        margin-bottom: 2px;
+      }
+      .stat span {
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
+      .badges {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 18px;
+      }
+      .badge {
+        padding: 9px 14px;
+        border-radius: 999px;
+        border: 1px solid rgba(255, 255, 255, 0.11);
+        background: rgba(255, 255, 255, 0.045);
+        color: #edf7ff;
+        font-size: 0.92rem;
+        font-weight: 600;
+        transition: var(--ease);
+      }
+      .badge:hover {
+        transform: translateY(-2px);
+        background: rgba(255, 255, 255, 0.08);
+      }
+
+      .layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1.16fr) minmax(440px, 0.94fr);
+        gap: 18px;
+        align-items: start;
+      }
+
+      .panel {
+        border: 1px solid var(--line);
+        border-radius: 28px;
+        background:
+          linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.055),
+            rgba(255, 255, 255, 0.025)
+          ),
+          rgba(8, 14, 24, 0.72);
+        backdrop-filter: blur(16px);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+      }
+      .panel-head {
+        padding: 22px 24px 18px;
+        border-bottom: 1px solid var(--line);
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.03),
+          rgba(255, 255, 255, 0.01)
+        );
+        position: sticky;
+        top: 0;
+        z-index: 5;
+        backdrop-filter: blur(18px);
+      }
+      .panel-head h2 {
+        margin: 0 0 6px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 1.42rem;
+        font-weight: 800;
+      }
+      .panel-head h2::before {
+        content: "";
+        width: 9px;
+        height: 26px;
+        border-radius: 999px;
+        background: linear-gradient(
+          180deg,
+          var(--accent),
+          var(--accent-2),
+          var(--accent-3)
+        );
+        box-shadow: 0 0 18px rgba(0, 197, 142, 0.35);
+      }
+      .panel-head p,
+      .panel-head small {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.97rem;
+      }
+      .panel-body {
+        padding: 22px;
+      }
+
+      .section {
+        margin-bottom: 16px;
+        border: 1px solid var(--line);
+        border-radius: 22px;
+        background:
+          linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.04),
+            rgba(255, 255, 255, 0.022)
+          ),
+          rgba(255, 255, 255, 0.015);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+        overflow: hidden;
+        transition: var(--ease);
+      }
+      .section:hover {
+        border-color: rgba(255, 255, 255, 0.16);
+        transform: translateY(-1px);
+      }
+      .section-title {
+        padding: 18px 18px 12px;
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 10px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        background: rgba(255, 255, 255, 0.02);
+      }
+      .section-title h3 {
+        margin: 0;
+        font-size: 1.16rem;
+        font-weight: 800;
+      }
+      .section-title span {
+        color: var(--muted);
+        font-size: 0.92rem;
+      }
+      .section-body {
+        padding: 18px;
+      }
+
+      .grid-2,
+      .grid-3,
+      .grid-4 {
+        display: grid;
+        gap: 14px;
+        margin-bottom: 14px;
+      }
+      .grid-2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .grid-3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+      .grid-4 {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+      .stack > * + * {
+        margin-top: 14px;
+      }
+
+      label {
+        display: block;
+        font-weight: 700;
+        font-size: 0.96rem;
+        margin-bottom: 8px;
+        color: #eff7ff;
+      }
+      .hint {
+        display: block;
+        margin-top: 6px;
+        color: var(--muted);
+        font-size: 0.84rem;
+      }
+      input[type="text"],
+      select,
+      textarea {
+        width: 100%;
+        border: 1px solid rgba(255, 255, 255, 0.11);
+        border-radius: 16px;
+        padding: 13px 15px;
+        background: rgba(5, 10, 18, 0.46);
+        color: var(--text);
+        outline: none;
+        font-family: inherit;
+        font-size: 1rem;
+        transition: var(--ease);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+      }
+      input[type="text"]:focus,
+      select:focus,
+      textarea:focus {
+        border-color: rgba(41, 168, 255, 0.55);
+        background: rgba(8, 15, 26, 0.74);
+        box-shadow:
+          0 0 0 4px rgba(41, 168, 255, 0.12),
+          0 10px 26px rgba(0, 0, 0, 0.18);
+        transform: translateY(-1px);
+      }
+      select {
+        cursor: pointer;
+        appearance: none;
+        padding-left: 2.5rem;
+        background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg width='18' height='18' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%2398a9bf' d='M4.2 6.7 9 11.5l4.8-4.8 1.4 1.4L9 14.3 2.8 8.1z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: left 14px center;
+        background-size: 18px;
+      }
+      select option {
+        background: #0e1723;
+        color: #fff;
+      }
+      textarea {
+        min-height: 132px;
+        resize: vertical;
+      }
+      .ta-lg {
+        min-height: 180px;
+      }
+      .ta-xl {
+        min-height: 220px;
+      }
+
+      .quick-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 14px;
+        padding: 12px;
+        background: rgba(0, 197, 142, 0.08);
+        border-radius: 16px;
+        border: 1px solid rgba(0, 197, 142, 0.2);
+        align-items: center;
+      }
+      .quick-tags span {
+        font-size: 0.9rem;
+        font-weight: 800;
+        color: var(--accent);
+        margin-left: 8px;
+      }
+      .tag-btn {
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: #fff;
+        padding: 6px 12px;
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 0.85rem;
+        font-weight: 700;
+        transition: var(--ease);
+      }
+      .tag-btn:hover {
+        background: var(--accent);
+        color: #000;
+        transform: translateY(-2px);
+      }
+
+      .checks {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 10px;
+      }
+      .check {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 12px 14px;
+        border: 1px solid rgba(255, 255, 255, 0.085);
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.028);
+        cursor: pointer;
+        transition: var(--ease);
+        user-select: none;
+        min-height: 64px;
+      }
+      .check:hover {
+        background: rgba(255, 255, 255, 0.055);
+        border-color: rgba(255, 255, 255, 0.15);
+      }
+      .check input[type="checkbox"] {
+        appearance: none;
+        width: 22px;
+        height: 22px;
+        border-radius: 7px;
+        flex: 0 0 auto;
+        margin: 1px 0 0;
+        border: 2px solid rgba(255, 255, 255, 0.35);
+        background: transparent;
+        position: relative;
+        transition: var(--ease);
+      }
+      .check input[type="checkbox"]:checked {
+        background: linear-gradient(180deg, var(--accent), #0ca96d);
+        border-color: var(--accent);
+        box-shadow: 0 0 0 4px rgba(0, 197, 142, 0.12);
+      }
+      .check input[type="checkbox"]:checked::after {
+        content: "";
+        position: absolute;
+        top: 2px;
+        left: 6px;
+        width: 5px;
+        height: 10px;
+        border: solid #03130d;
+        border-width: 0 2.2px 2.2px 0;
+        transform: rotate(45deg);
+      }
+      .check span {
+        font-size: 0.95rem;
+        line-height: 1.45;
+        color: #edf7ff;
+      }
+      .check small {
+        display: block;
+        color: var(--muted);
+        font-size: 0.82rem;
+        margin-top: 2px;
+      }
+
+      .pillbar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 6px;
+        border: 1px solid rgba(255, 255, 255, 0.065);
+        border-radius: 999px;
+        background: rgba(5, 10, 18, 0.44);
+        width: fit-content;
+        margin-bottom: 14px;
+        max-width: 100%;
+      }
+      .pill {
+        border-radius: 999px;
+        padding: 10px 16px;
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: var(--muted);
+        cursor: pointer;
+        transition: var(--ease);
+        text-align: center;
+        white-space: nowrap;
+      }
+      .pill:hover {
+        color: #fff;
+        background: rgba(255, 255, 255, 0.055);
+      }
+      .pill.active {
+        color: #021812;
+        background: linear-gradient(135deg, var(--accent), #7cf8cc);
+        box-shadow: 0 10px 24px rgba(0, 197, 142, 0.24);
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 18px;
+      }
+      button.main-btn {
+        appearance: none;
+        border: none;
+        cursor: pointer;
+        border-radius: 16px;
+        padding: 14px 20px;
+        font-family: inherit;
+        font-size: 1rem;
+        font-weight: 800;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        transition: var(--ease);
+        position: relative;
+        overflow: hidden;
+      }
+      button.main-btn:hover {
+        transform: translateY(-2px);
+      }
+      button.main-btn:active {
+        transform: translateY(1px);
+      }
+      .btn-primary {
+        background: linear-gradient(135deg, var(--accent), #06a56f);
+        color: #00170f;
+        box-shadow: 0 16px 28px rgba(0, 197, 142, 0.24);
+      }
+      .btn-secondary {
+        background: linear-gradient(135deg, var(--accent-2), #167cd7);
+        color: #fff;
+        box-shadow: 0 16px 28px rgba(41, 168, 255, 0.22);
+      }
+      .btn-kids {
+        background: linear-gradient(135deg, var(--accent-3), #ff9a44);
+        color: #000;
+        box-shadow: 0 16px 28px rgba(255, 202, 99, 0.22);
+      }
+      .btn-split {
+        background: linear-gradient(135deg, #845ef7, #5c33f6);
+        color: #fff;
+        box-shadow: 0 16px 28px rgba(132, 94, 247, 0.22);
+      }
+      .btn-smart-pause {
+        background: linear-gradient(135deg, #ff9a44, #e85d04);
+        color: #fff;
+        box-shadow: 0 16px 28px rgba(232, 93, 4, 0.25);
+      }
+      .btn-ghost {
+        background: rgba(255, 255, 255, 0.035);
+        color: #fff;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+      }
+      .btn-danger {
+        background: transparent;
+        color: #ffb5b5;
+        border: 1px solid rgba(255, 107, 107, 0.32);
+      }
+      .btn-danger:hover {
+        background: rgba(255, 107, 107, 0.08);
+      }
+
+      .right-sticky {
+        position: sticky;
+        top: 18px;
+      }
+      .output-grid {
+        display: grid;
+        gap: 14px;
+      }
+      .output-card {
+        border: 1px solid var(--line);
+        border-radius: 22px;
+        overflow: hidden;
+        background:
+          linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.04),
+            rgba(255, 255, 255, 0.02)
+          ),
+          rgba(5, 10, 18, 0.42);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.02);
+      }
+      .output-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        padding: 16px 18px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        background: rgba(255, 255, 255, 0.025);
+      }
+      .output-head h3 {
+        margin: 0;
+        font-size: 1.08rem;
+        font-weight: 800;
+        color: #dff4ff;
+      }
+      .mini-tools {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      
+      pre {
+        margin: 0;
+        padding: 18px;
+        white-space: pre-wrap;
+        word-break: break-word;
+        line-height: 1.82;
+        font-family: inherit;
+        min-height: 130px;
+        color: #eef8ff;
+        font-size: 1.01rem;
+      }
+
+      .section-grid-wide {
+        display: grid;
+        gap: 14px;
+        grid-template-columns: 1fr;
+      }
+
+      @media (max-width: 1400px) {
+        .layout {
+          grid-template-columns: 1fr;
+        }
+        .right-sticky {
+          position: static;
+        }
+        .hero-top {
+          grid-template-columns: 1fr;
+        }
+      }
+      @media (max-width: 980px) {
+        .grid-4 {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        .grid-3 {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+      @media (max-width: 720px) {
+        .page {
+          width: calc(100% - 18px);
+          margin: 10px auto 18px;
+        }
+        .hero {
+          padding: 22px 18px;
+        }
+        .panel-head {
+          padding: 18px;
+        }
+        .panel-body {
+          padding: 16px;
+        }
+        .section-body,
+        .section-title {
+          padding: 15px;
+        }
+        .grid-2,
+        .grid-3,
+        .grid-4 {
+          grid-template-columns: 1fr;
+        }
+        .actions {
+          flex-direction: column;
+        }
+        button {
+          width: 100%;
+        }
+        .pillbar {
+          border-radius: 18px;
+        }
+        .pill {
+          flex: 1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <section class="hero">
+        <div class="hero-top">
+          <div>
+            <h1>
+              <span>مولّد برومبت الإنشاد الاحترافي (V7.4 المقامات)</span>
+            </h1>
+            <p>
+              التحديث الماسي! تم دمج <strong>المقامات العربية الأصيلة</strong> في واجهة الطابع الموسيقي، حيث يقوم الذكاء الاصطناعي بترجمتها هندسياً لإنتاج (النهاوند، الصبا، الرست، الحجاز، والعجم) بلمسة زر.
+            </p>
+            <div class="badges">
+              <span class="badge" style="background:#5c33f6">Maqamat AI Translation 🎵</span>
+              <span class="badge" style="background:#ffca63; color:#000">Anti-Stutter Shield 🛡️</span>
+              <span class="badge" style="background:#29a8ff">Magic Action Tags ✨</span>
+              <span class="badge" style="background:#00c58e; color:#000">Smart Pauses</span>
+            </div>
+          </div>
+          <div class="hero-stats">
+            <div class="stat">
+              <b>Maqamat</b><span>تضمين المقامات الصوتية (صبا، نهاوند، حجاز...) في خيارات الطابع</span>
+            </div>
+            <div class="stat">
+              <b>Magic Tags</b><span>إضافة زر (الهمهمة) المفقود لتسهيل تهيئة المقام قبل الكلمات</span>
+            </div>
+            <div class="stat">
+              <b>Line Shield</b><span>وسوم قوية تمنع تخطي ودمج الكلمات للحفاظ على الوزن</span>
+            </div>
+            <div class="stat">
+              <b>Anti-Stutter</b><span>درع سلبي يمنع الآلة من تكرار أنصاف الكلمات (الميليسما الخاطئة)</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="layout">
+        <section class="panel">
+          <div class="panel-head">
+            <h2>الإعدادات</h2>
+            <p>أدخل تفاصيل النشيد وسيقوم النظام بهندسة المخرجات تلقائياً.</p>
+          </div>
+          <div class="panel-body">
+            <div class="section">
+              <div class="section-title">
+                <h3>النوع والصوت</h3>
+              </div>
+              <div class="section-body">
+                <div class="grid-4">
+                  <div>
+                    <label for="nasheedType">نوع العمل</label>
+                    <select id="nasheedType">
+                      <option value="quranic">قرآني / روحاني</option>
+                      <option value="dua">دعاء وابتهال</option>
+                      <option value="praise">ثناء وتسبيح</option>
+                      <option value="motivational">إيماني حماسي</option>
+                      <option value="patriotic">حماسي وطني</option>
+                      <option value="educational">تعليمي مبسط</option>
+                      <option value="children">طفولي / ترديد صغار</option>
+                      <option value="mawlid">مدح نبوي هادئ</option>
+                      <option value="poeticNasheed" selected>إنشاد شعري (موزون)</option>
+                      <option value="poetryRecital">إلقاء شعري</option>
+                      <option value="arabicMuwashshah">موشح عربي</option>
+                      <option value="andalusianMuwashshah">موشح أندلسي</option>
+                      <option value="custom">مخصص</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label for="singerVoice">نوع المنشد</label>
+                    <select id="singerVoice">
+                      <option value="male">رجل / Male</option>
+                      <option value="female">امرأة / Female</option>
+                      <option value="boy">طفل / Boy</option>
+                      <option value="girl">طفلة / Girl</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label for="vocalTexture">النسيج الصوتي (الفلاتر)</label>
+                    <select id="vocalTexture">
+                      <option value="pureAcapella">أكابيلا خالص (متوازن)</option>
+                      <option value="dryRaw" selected>صوت خام جاف (بدون فلاتر أو صدى)</option>
+                      <option value="choirRich">كورال واسع وأصداء</option>
+                      <option value="soloChoir">منشد رئيسي + كورال</option>
+                      <option value="breathyAmbient">همهمة وجو عائم</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label for="choirSize">حجم الكورال</label>
+                    <select id="choirSize">
+                      <option value="none" selected>بدون كورال (منفرد تمامًا)</option>
+                      <option value="small">صغير وحميم</option>
+                      <option value="medium">متوسط ومتوازن</option>
+                      <option value="large">كبير وواسع</option>
+                      <option value="massive">ضخم وملحمي</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="grid-4">
+                  <div>
+                    <label for="energy">الطاقة</label>
+                    <select id="energy">
+                      <option value="none" selected>بدون (موصى به للصوت الخام)</option>
+                      <option value="gentle">هادئة / Gentle</option>
+                      <option value="balanced">متوازنة / Balanced</option>
+                      <option value="high">عالية / High-energy</option>
+                      <option value="intense">قوية جدًا / Intense</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label for="tempo">السرعة</label>
+                    <select id="tempo">
+                      <option value="none">بدون تحديد</option>
+                      <option value="slow" selected>بطيئة (للحفظ) / Slow</option>
+                      <option value="mid">متوسطة / Mid-tempo</option>
+                      <option value="fast">سريعة / Fast-paced</option>
+                      <option value="dynamic">متغيرة / Dynamic</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label for="spirit" style="color:var(--accent-3);">الطابع (المقامات) 🎵</label>
+                    <select id="spirit" style="border-color:var(--accent-3);">
+                      <option value="none">بدون (لتجنب الإيقاع)</option>
+                      <option value="nahawand" selected>عاطفي وشجي (مقام النهاوند)</option>
+                      <option value="saba">حزين وروحاني (مقام الصبا)</option>
+                      <option value="rast">معتدل وسردي (مقام الرست)</option>
+                      <option value="hijaz">روحاني حجازي (مقام الحجاز)</option>
+                      <option value="ajam">مبتهج ومشرق (مقام العجم)</option>
+                      <option value="uplifting">روحاني ملهم (عام)</option>
+                      <option value="joyful">مبهج ومشرق (عام)</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label for="leadCharacter">شخصية الصوت</label>
+                    <select id="leadCharacter">
+                      <option value="none">بدون تحديد</option>
+                      <option value="warm" selected>دافئ ومؤثر</option>
+                      <option value="bright">مشرق وواضح للمخارج</option>
+                      <option value="majestic">شامخ ومهيب</option>
+                      <option value="tender">حنون ورقيق</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="section-grid-wide" style="margin-top: 14px">
+                  <div>
+                    <label for="customTheme"
+                      >موضوع العمل أو رسالته (اختياري، يكتب بالإنجليزية)</label
+                    >
+                    <input
+                      id="customTheme"
+                      type="text"
+                      placeholder="e.g., kids alphabet, simple math, morning routine..."
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="section">
+              <div class="section-title">
+                <h3>البنية، المؤثرات، وضوابط الأداء</h3>
+              </div>
+              <div class="section-body">
+                <div class="pillbar" id="structurePresetBar">
+                  <div class="pill active" data-value="full">كامل</div>
+                  <div class="pill" data-value="poetic">شعري</div>
+                  <div class="pill" data-value="short">مختصر</div>
+                  <div class="pill" data-value="kids">طفولي (بدون مقدمات)</div>
+                </div>
+                <input type="hidden" id="structurePreset" value="full" />
+
+                <div class="checks" style="margin-bottom: 20px">
+                  <label class="check"
+                    ><input
+                      type="checkbox"
+                      class="sectionToggle"
+                      value="intro"
+                      checked
+                    /><span>[Intro]<small>مقدمة</small></span></label
+                  >
+                  <label class="check"
+                    ><input
+                      type="checkbox"
+                      class="sectionToggle"
+                      value="chorus"
+                      checked
+                    /><span>[Chorus]<small>اللازمة</small></span></label
+                  >
+                  <label class="check"
+                    ><input
+                      type="checkbox"
+                      class="sectionToggle"
+                      value="verse1"
+                      checked
+                    /><span>[Verse 1]<small>المقطع الأول</small></span></label
+                  >
+                  <label class="check"
+                    ><input
+                      type="checkbox"
+                      class="sectionToggle"
+                      value="verse2"
+                      checked
+                    /><span>[Verse 2]<small>المقطع الثاني</small></span></label
+                  >
+                  <label class="check"
+                    ><input
+                      type="checkbox"
+                      class="sectionToggle"
+                      value="bridge"
+                    /><span>[Bridge]<small>الجسر</small></span></label
+                  >
+                  <label class="check"
+                    ><input
+                      type="checkbox"
+                      class="sectionToggle"
+                      value="climaxSec"
+                      checked
+                    /><span>[Vocal Climax]<small>الذروة</small></span></label
+                  >
+                  <label class="check"
+                    ><input
+                      type="checkbox"
+                      class="sectionToggle"
+                      value="outro"
+                      checked
+                    /><span>[Outro]<small>الخاتمة</small></span></label
+                  >
+                </div>
+
+                <label
+                  >ضوابط الأداء والمؤثرات (المفتاح لحماية القصيدة)</label
+                >
+                <div class="checks">
+                  <label class="check" style="border-color: var(--accent); background: rgba(0, 197, 142, 0.05);"
+                    ><input
+                      type="checkbox"
+                      class="allowedFx"
+                      value="strict line-by-line delivery, exact lyrics adherence, distinct phrasing, no word overlapping"
+                      checked
+                    /><span>التزام شعري صارم 🛡️<small>يمنع دمج الأسطر</small></span></label
+                  >
+                  <label class="check"
+                    ><input
+                      type="checkbox"
+                      class="allowedFx"
+                      value="humming"
+                      checked
+                    /><span>همهمات (Humming)</span></label
+                  >
+                  <label class="check"
+                    ><input
+                      type="checkbox"
+                      class="allowedFx"
+                      value="breath hits"
+                    /><span>النفس (Breath hits)</span></label
+                  >
+                  <label class="check"
+                    ><input
+                      type="checkbox"
+                      class="allowedFx"
+                      value="layered harmonies"
+                    /><span>طبقات (Harmonies)</span></label
+                  >
+                  <label class="check"
+                    ><input
+                      type="checkbox"
+                      class="allowedFx"
+                      value="pure vocal reverb"
+                    /><span>صدى نقي منفرد (Pure Reverb)</span></label
+                  >
+                </div>
+              </div>
+            </div>
+
+            <div class="section">
+              <div class="section-title">
+                <h3>الكلمات المخصصة (الإخراج السيناريوي)</h3>
+              </div>
+              <div class="section-body">
+                
+                <div class="quick-tags">
+                  <span>أوسمة الأداء:</span>
+                  <button type="button" class="tag-btn" data-tag="[pause]">⏸️ سكتة [pause]</button>
+                  <button type="button" class="tag-btn" data-tag="[humming]" style="background:rgba(255, 202, 99, 0.2); border-color:#ffca63;">🎵 همهمة [humming]</button>
+                  <button type="button" class="tag-btn" data-tag="[fade out]">👋 تلاشي [fade out]</button>
+                  <button type="button" class="tag-btn" data-tag="[vocal run]">🎶 مد فخم [vocal run]</button>
+                  <button type="button" class="tag-btn" data-tag="[acapella break]">🛑 وقفة أكابيلا [acapella break]</button>
+                  <button type="button" class="tag-btn" data-tag="[whisper]">🤫 همس [whisper]</button>
+                  <button type="button" class="tag-btn" data-tag="[Choir]">👥 كورال [Choir]</button>
+                  <button type="button" class="tag-btn" data-tag="[Solo]">👤 منفرد [Solo]</button>
+                </div>
+
+                <div class="stack">
+                  <div>
+                    <label for="chorusLyrics">نص اللازمة [Chorus]</label>
+                    <textarea
+                      id="chorusLyrics"
+                      class="ta-lg"
+                      placeholder="اكتب اللازمة هنا، كل شطر في سطر مستقل"
+                    ></textarea>
+                  </div>
+                  <div>
+                    <label for="verseLyrics">نص المقاطع [Verse]</label>
+                    <textarea
+                      id="verseLyrics"
+                      class="ta-lg"
+                      placeholder="اكتب الأبيات هنا، كل شطر في سطر مستقل"
+                    ></textarea>
+                  </div>
+                  <div>
+                    <label for="bridgeLyrics"
+                      >نص الجسر [Bridge] (اختياري)</label
+                    >
+                    <textarea
+                      id="bridgeLyrics"
+                      placeholder="إن أردت جسرًا خاصًا قبل الذروة فاكتبه هنا"
+                    ></textarea>
+                  </div>
+                  <div>
+                    <label for="climaxLine"
+                      >سطر الذروة [Vocal Climax] (اختياري)</label
+                    >
+                    <textarea
+                      id="climaxLine"
+                      placeholder="اكتب جملة الذروة هنا"
+                    ></textarea>
+                  </div>
+                  <div>
+                    <label for="outroLyrics"
+                      >نص الخاتمة [Outro] (اختياري)</label
+                    >
+                    <textarea
+                      id="outroLyrics"
+                      placeholder="خاتمة خفيفة لتلاشي الصوت"
+                    ></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="section">
+              <div class="section-title">
+                <h3>الموانع السلبية الاحترافية (Exclude)</h3>
+              </div>
+              <div class="section-body">
+                <div class="checks">
+                  <label class="check" style="border-color: var(--accent-3); background: rgba(255, 202, 99, 0.05);"
+                    ><input
+                      type="checkbox"
+                      class="negativeItem"
+                      value="stuttering, word repetition, looping syllables, partial words, mumbling"
+                      checked
+                    /><span>مكافحة التأتأة والتقطيع 🛡️<small>تمنع تكرار (فال فال)</small></span></label
+                  >
+                  <label class="check" style="border-color: var(--danger); background: rgba(255, 107, 107, 0.05);"
+                    ><input
+                      type="checkbox"
+                      class="negativeItem"
+                      value="skipping words, mixing lines, hallucinated lyrics, gibberish"
+                      checked
+                    /><span>تخطي وخلط الكلمات 🚫<small>يحمي القصيدة</small></span></label
+                  >
+                  <label class="check"
+                    ><input
+                      type="checkbox"
+                      class="negativeItem"
+                      value="instruments, background music"
+                      checked
+                    /><span>آلات وموسيقى (Instruments)</span></label
+                  >
+                  <label class="check"
+                    ><input
+                      type="checkbox"
+                      class="negativeItem"
+                      value="drums, beats"
+                      checked
+                    /><span>طبول وإيقاعات (Drums)</span></label
+                  >
+                  <label class="check"
+                    ><input
+                      type="checkbox"
+                      class="negativeItem"
+                      value="reverb, echo, delay"
+                    /><span>صدى وفلاتر (Reverb/Echo)</span></label
+                  >
+                  <label class="check"
+                    ><input
+                      type="checkbox"
+                      class="negativeItem"
+                      value="autotune, robotic voice"
+                      checked
+                    /><span>أوتوتيون وصوت آلي</span></label
+                  >
+                  <label class="check"
+                    ><input
+                      type="checkbox"
+                      class="negativeItem"
+                      value="clapping, handclaps"
+                      checked
+                    /><span>تصفيق (Clapping)</span></label
+                  >
+                  <label class="check"
+                    ><input
+                      type="checkbox"
+                      class="negativeItem"
+                      value="whistling"
+                      checked
+                    /><span>تصفير (Whistling)</span></label
+                </div>
+              </div>
+            </div>
+
+            <div class="actions">
+              <button type="button" class="main-btn btn-primary" id="generateBtn">
+                هندسة البرومبت الآن
+              </button>
+              
+              <button type="button" class="main-btn btn-smart-pause" id="smartPauseBtn">
+                🪄 التوزيع الذكي للوقفات
+              </button>
+
+              <button type="button" class="main-btn btn-split" id="geminiSplitBtn">
+                تقسيم المونتاج (30ث)
+              </button>
+              <button type="button" class="main-btn btn-kids" id="fillKidsBtn">
+                نموذج أطفال
+              </button>
+              <button
+                type="button"
+                class="main-btn btn-secondary"
+                id="fillEducationalBtn"
+              >
+                نموذج تعليمي
+              </button>
+              <button type="button" class="main-btn btn-ghost" id="copyCombinedBtn">
+                نسخ النسخة المجمعة
+              </button>
+              <button type="button" class="main-btn btn-danger" id="resetBtn">
+                إعادة الضبط
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel right-sticky">
+          <div class="panel-head">
+            <h2>المخرجات المعتمدة للمولدات</h2>
+            <small
+              >استخدم "النسخة المجمعة" للنسخ السريع في مولدات الصوت
+              الذكية.</small
+            >
+          </div>
+          <div class="panel-body">
+            <div class="output-grid">
+              <div
+                class="output-card"
+                style="border-color: rgba(0, 197, 142, 0.4)"
+              >
+                <div class="output-head">
+                  <h3>نسخة مجمعة احترافية (الخلاصة الجاهزة)</h3>
+                  <div class="mini-tools">
+                    <button
+                      type="button"
+                      class="tool-btn"
+                      data-copy="combinedOutput"
+                      style="background: var(--accent); color: #000"
+                    >
+                      نسخ الكل
+                    </button>
+                  </div>
+                </div>
+                <pre id="combinedOutput" style="color: #fff"></pre>
+              </div>
+
+              <div class="output-card">
+                <div class="output-head">
+                  <h3>البرومبت الإنجليزي (وسوم النمط/الستايل)</h3>
+                  <div class="mini-tools">
+                    <button
+                      type="button"
+                      class="tool-btn"
+                      data-copy="englishOutput"
+                    >
+                      نسخ
+                    </button>
+                  </div>
+                </div>
+                <pre id="englishOutput"></pre>
+              </div>
+
+              <div class="output-card">
+                <div class="output-head">
+                  <h3>هيكل الكلمات النقي (Lyrics)</h3>
+                  <div class="mini-tools">
+                    <button
+                      type="button"
+                      class="tool-btn"
+                      data-copy="arabicOutput"
+                    >
+                      نسخ
+                    </button>
+                  </div>
+                </div>
+                <pre id="arabicOutput"></pre>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const $ = (id) => document.getElementById(id);
+        const fields = {
+          nasheedType: $("nasheedType"),
+          singerVoice: $("singerVoice"),
+          customTheme: $("customTheme"),
+          energy: $("energy"),
+          tempo: $("tempo"),
+          spirit: $("spirit"),
+          vocalTexture: $("vocalTexture"),
+          choirSize: $("choirSize"),
+          leadCharacter: $("leadCharacter"),
+          structurePreset: $("structurePreset"),
+          chorusLyrics: $("chorusLyrics"),
+          verseLyrics: $("verseLyrics"),
+          bridgeLyrics: $("bridgeLyrics"),
+          climaxLine: $("climaxLine"),
+          outroLyrics: $("outroLyrics"),
+          arabicOutput: $("arabicOutput"),
+          englishOutput: $("englishOutput"),
+          combinedOutput: $("combinedOutput"),
+        };
+
+        const dict = {
+          nasheedType: {
+            quranic: { en: "Quranic spiritual nasheed" },
+            dua: { en: "devotional supplication nasheed" },
+            praise: { en: "praise nasheed" },
+            motivational: { en: "uplifting faith-based nasheed" },
+            patriotic: { en: "patriotic chant" },
+            educational: { en: "clear educational chant for students, pedagogical, simple repetitive melody" },
+            children: { en: "simple repetitive childrens chant, nursery rhyme style, soft and tender" },
+            mawlid: { en: "prophetic praise nasheed" },
+            poeticNasheed: { en: "poetic nasheed" },
+            poetryRecital: { en: "poetry recital performance, spoken word style, deep resonance, dramatic pauses, solemn cinematic atmosphere" },
+            arabicMuwashshah: { en: "Arabic muwashshah vocal" },
+            andalusianMuwashshah: { en: "Andalusian muwashshah vocal" },
+            custom: { en: "custom vocal piece" },
+          },
+          singerVoice: {
+            male: { en: "male lead vocal" },
+            female: { en: "female lead vocal" },
+            boy: { en: "boy lead vocal" },
+            girl: { en: "girl lead vocal" },
+          },
+          energy: {
+            none: { en: "" },
+            gentle: { en: "gentle energy" },
+            balanced: { en: "balanced energy" },
+            high: { en: "high energy" },
+            intense: { en: "intense power" },
+          },
+          tempo: {
+            none: { en: "" },
+            slow: { en: "slow steady tempo for repetition" },
+            mid: { en: "mid-tempo steady rhythm" },
+            fast: { en: "fast-paced" },
+            dynamic: { en: "dynamic tempo" },
+          },
+          spirit: {
+            none: { en: "" },
+            // إضافة ترجمات المقامات الدقيقة
+            nahawand: { en: "emotional melancholic, cinematic minor key, sweet sorrow, deep feelings" },
+            saba: { en: "deep sorrow, grieving vocal, highly emotional, solemn microtonal" },
+            rast: { en: "traditional middle eastern vocal, balanced mood, major key storyteller" },
+            hijaz: { en: "spiritual middle eastern, phrygian dominant, desert vibe, intense" },
+            ajam: { en: "joyful, bright major key, uplifting, celebratory" },
+            uplifting: { en: "deeply uplifting" },
+            joyful: { en: "joyful radiant playful" },
+          },
+          vocalTexture: {
+            pureAcapella: { en: "PURE ACAPELLA" },
+            dryRaw: {
+              en: "DRY RAW VOCAL, completely unprocessed, ZERO reverb, flat studio voice, strictly natural human voice, NO clapping, NO whistling",
+            },
+            choirRich: { en: "choir-rich" },
+            soloChoir: { en: "solo lead with choir" },
+            breathyAmbient: { en: "breathy vocal ambient" },
+          },
+          choirSize: {
+            none: { en: "NO CHOIR, STRICTLY SOLO VOCAL" },
+            small: { en: "small intimate choir" },
+            medium: { en: "medium choir" },
+            large: { en: "large wide choir" },
+            massive: { en: "massive choir" },
+          },
+          leadCharacter: {
+            none: { en: "" },
+            warm: { en: "warm lead" },
+            bright: { en: "bright hyper-articulated slow dictation" },
+            majestic: { en: "majestic lead" },
+            tender: { en: "tender lead" },
+          },
+        };
+
+        function getText(v) {
+          return (v || "").trim();
+        }
+        function getChecked(selector) {
+          return Array.from(document.querySelectorAll(selector))
+            .filter((n) => n.checked)
+            .map((n) => n.value);
+        }
+
+        function activatePreset(value) {
+          fields.structurePreset.value = value;
+          document
+            .querySelectorAll("#structurePresetBar .pill")
+            .forEach((p) =>
+              p.classList.toggle("active", p.dataset.value === value),
+            );
+          const presets = {
+            full: ["intro", "chorus", "verse1", "verse2", "climaxSec", "outro"],
+            short: ["intro", "chorus", "verse1", "outro"],
+            poetic: ["intro", "verse1", "bridge", "climaxSec", "outro"],
+            kids: ["chorus", "verse1"],
+          };
+          const required = presets[value] || presets.full;
+          document
+            .querySelectorAll(".sectionToggle")
+            .forEach((cb) => (cb.checked = required.includes(cb.value)));
+        }
+
+        function getLines(text) {
+          return getText(text)
+            .split("\n")
+            .map((s) => s.trim())
+            .filter(Boolean);
+        }
+
+        function buildCleanStructure() {
+          const sections = getChecked(".sectionToggle");
+          const chorus = getLines(fields.chorusLyrics.value);
+          const verses = getLines(fields.verseLyrics.value);
+          const bridge = getLines(fields.bridgeLyrics.value);
+          const climax = getLines(fields.climaxLine.value);
+          const outroText = getLines(fields.outroLyrics.value);
+          const out = [];
+
+          if (sections.includes("intro")) {
+            out.push("[Intro]");
+            out.push("");
+          }
+
+          if (sections.includes("chorus")) {
+            out.push("[Chorus]");
+            if (chorus.length) {
+              chorus.forEach((line) => out.push(line));
+            }
+            out.push("");
+          }
+
+          if (sections.includes("verse1")) {
+            out.push("[Verse]");
+            const firstHalf = verses.slice(0, Math.ceil(verses.length / 2));
+            if (firstHalf.length) {
+              firstHalf.forEach((line) => out.push(line));
+            }
+            out.push("");
+          }
+
+          if (sections.includes("verse2")) {
+            out.push("[Verse]");
+            const secondHalf = verses.slice(Math.ceil(verses.length / 2));
+            if (secondHalf.length) {
+              secondHalf.forEach((line) => out.push(line));
+            }
+            out.push("");
+          }
+
+          if (sections.includes("bridge")) {
+            out.push("[Bridge]");
+            if (bridge.length) {
+              bridge.forEach((line) => out.push(line));
+            }
+            out.push("");
+          }
+
+          if (sections.includes("climaxSec")) {
+            out.push("[Vocal Climax]");
+            if (climax.length) {
+              climax.forEach((line) => out.push(line));
+            }
+            out.push("");
+          }
+
+          if (sections.includes("outro")) {
+            out.push("[Outro]");
+            if (outroText.length) {
+              outroText.forEach((line) => out.push(line));
+            }
+          }
+
+          return out.join("\n").trim();
+        }
+
+        function buildEnglishTags() {
+          const theme = getText(fields.customTheme.value);
+          const fx = getChecked(".allowedFx");
+
+          const tags = [
+            dict.nasheedType[fields.nasheedType.value].en,
+            dict.singerVoice[fields.singerVoice.value].en,
+            dict.vocalTexture[fields.vocalTexture.value].en,
+            dict.energy[fields.energy.value].en,
+            dict.tempo[fields.tempo.value].en,
+            dict.spirit[fields.spirit.value].en,
+            dict.choirSize[fields.choirSize.value].en,
+            dict.leadCharacter[fields.leadCharacter.value].en,
+          ];
+
+          let prompt =
+            "VOCALS ONLY, 100% human voice, zero instruments, " +
+            tags.filter(Boolean).join(", ");
+
+          if (theme) prompt += `, Theme: ${theme}`;
+
+          if (fx.length > 0) {
+            prompt += `, Vocal Effects: ${fx.join(", ")}`;
+          } else {
+            prompt += `, NO VOCAL EFFECTS, ZERO REVERB, NO HUMMING, NO ECHO. STRICTLY DRY RAW SOLO VOICE, 100% natural, no clapping, no whistling.`;
+          }
+
+          return prompt;
+        }
+
+        function buildNegative() {
+          const chosen = getChecked(".negativeItem");
+          if (!chosen.length) return "";
+          return chosen.join(", ");
+        }
+
+        function generate() {
+          const tags = buildEnglishTags();
+          const lyrics = buildCleanStructure();
+          const neg = buildNegative();
+
+          fields.englishOutput.textContent = tags;
+          fields.arabicOutput.textContent = lyrics;
+
+          const combined = `=== مربع الأسلوب / Style Prompt ===\n(انسخ هذا في مربع الوصف الخاص بالذكاء الاصطناعي)\n${tags}\n\n=== مربع الكلمات / Lyrics ===\n(انسخ هذا في مربع الكلمات المخصصة)\n${lyrics}\n\n=== مربع الاستبعاد / Negative Prompt ===\n(إذا وجد مربع للاستبعاد، انسخ هذا فيه)\n${neg}`;
+
+          fields.combinedOutput.textContent = combined;
+        }
+
+        function generateSmartPauses() {
+          ['chorusLyrics', 'verseLyrics', 'bridgeLyrics', 'climaxLine', 'outroLyrics'].forEach(id => {
+            let el = $(id);
+            if (el && el.value) {
+              let newText = el.value.replace(/،/g, " [pause] \n").replace(/,/g, " [pause] \n");
+              el.value = newText;
+            }
+          });
+          generate();
+          
+          const btn = $('smartPauseBtn');
+          const originalText = btn.textContent;
+          btn.textContent = "✔ تم التوزيع";
+          setTimeout(() => btn.textContent = originalText, 2000);
+        }
+
+        function generateGeminiSplits() {
+          const tags = buildEnglishTags();
+          const neg = buildNegative();
+          const chorus = getLines(fields.chorusLyrics.value);
+          const verses = getLines(fields.verseLyrics.value);
+          const bridge = getLines(fields.bridgeLyrics.value);
+          const climax = getLines(fields.climaxLine.value);
+          const outroText = getLines(fields.outroLyrics.value);
+
+          const chunkSize = 2;
+          const verseChunks = [];
+          for (let i = 0; i < verses.length; i += chunkSize) {
+            verseChunks.push(verses.slice(i, i + chunkSize));
+          }
+          if (verseChunks.length === 0) verseChunks.push([]);
+
+          let combinedOut = `=== أجزاء المونتاج الخاصة بـ Gemini (30 ثانية) ===\nانسخ كل جزء على حدة في محادثة جديدة، ثم ادمج الملفات الصوتية في المونتاج.\n\n=== مربع الأسلوب الثابت (انسخه في كل المحاولات لضمان ثبات اللحن) ===\n${tags}\n\n=== الموانع السلبية ===\n${neg}\n\n------------------------------------------------\n\n`;
+
+          combinedOut += `=== الجزء 1 / Part 1 ===\n[Intro]\n\n`;
+          if (chorus.length) {
+            combinedOut += `[Chorus]\n${chorus.join("\n")}\n\n`;
+          }
+          if (verseChunks[0].length > 0) {
+            combinedOut += `[Verse]\n${verseChunks[0].join("\n")}\n\n`;
+          }
+
+          if (
+            verseChunks.length > 1 ||
+            bridge.length ||
+            climax.length ||
+            outroText.length
+          ) {
+            combinedOut += `[fade out]\n\n------------------------------------------------\n\n`;
+          } else {
+            combinedOut += `[Outro]\n[fade out]\n\n------------------------------------------------\n\n`;
+          }
+
+          for (let i = 1; i < verseChunks.length; i++) {
+            combinedOut += `=== الجزء ${i + 1} / Part ${i + 1} ===\n`;
+            combinedOut += `[Soft intro]\n\n`;
+            if (verseChunks[i].length > 0) {
+              combinedOut += `[Verse]\n${verseChunks[i].join("\n")}\n\n`;
+            }
+
+            if (
+              i === verseChunks.length - 1 &&
+              !bridge.length &&
+              !climax.length &&
+              !outroText.length
+            ) {
+              combinedOut += `[Outro]\n[fade out]\n`;
+            } else {
+              combinedOut += `[fade out]\n`;
+            }
+            combinedOut += `\n------------------------------------------------\n\n`;
+          }
+
+          if (bridge.length || climax.length || outroText.length) {
+            const lastPartNum =
+              verseChunks.length + (verseChunks[0].length > 0 ? 1 : 0);
+            combinedOut += `=== الجزء الأخير / Final Part ===\n[Soft intro]\n\n`;
+            if (bridge.length)
+              combinedOut += `[Bridge]\n${bridge.join("\n")}\n\n`;
+            if (climax.length)
+              combinedOut += `[Vocal Climax]\n${climax.join("\n")}\n\n`;
+            if (outroText.length)
+              combinedOut += `[Outro]\n${outroText.join("\n")}\n`;
+            else combinedOut += `[Outro]\n`;
+            combinedOut += `[fade out]\n\n------------------------------------------------\n\n`;
+          }
+
+          fields.combinedOutput.textContent = combinedOut;
+          fields.combinedOutput.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
+        }
+
+        function fillEducationalExample() {
+          fields.nasheedType.value = "educational";
+          fields.singerVoice.value = "male";
+          fields.customTheme.value = "Joy of learning, seeking knowledge";
+          fields.energy.value = "balanced";
+          fields.tempo.value = "mid";
+          fields.spirit.value = "joyful";
+          fields.vocalTexture.value = "soloChoir";
+          fields.choirSize.value = "medium";
+          fields.leadCharacter.value = "bright";
+
+          activatePreset("short");
+          document.querySelectorAll('.allowedFx[value*="strict line-by-line"]').forEach(n => n.checked = true);
+
+          fields.chorusLyrics.value =
+            "يَا طَالِبَ الْعِلْمِ امْضِ لِلْأَمَامْ\nبِنُورِ الْعِلْمِ نَبْنِي ذُرَى الْأَحْلَامْ";
+          fields.verseLyrics.value =
+            "اِقْرَأْ وَتَأَمَّلْ فِي الْكَوْنِ الْفَسِيحْ\nعِلْمُكَ بَابٌ لِلْخَيْرِ الصَّرِيحْ";
+          generate();
+        }
+
+        function fillKidsExample() {
+          fields.nasheedType.value = "children";
+          const voices = ["male", "female", "boy", "girl"];
+          fields.singerVoice.value =
+            voices[Math.floor(Math.random() * voices.length)];
+          fields.customTheme.value =
+            "Kids alphabet, clear dictation for repeating, pedagogical";
+          
+          fields.energy.value = "none";
+          fields.tempo.value = "slow";
+          fields.spirit.value = "none";
+          fields.vocalTexture.value = "dryRaw";
+          fields.choirSize.value = "none";
+          fields.leadCharacter.value = "bright";
+
+          activatePreset("kids");
+          
+          document.querySelectorAll(".allowedFx").forEach((n) => {
+            if(n.value.includes("strict")) {
+               n.checked = true;
+            } else {
+               n.checked = false;
+            }
+          });
+
+          fields.chorusLyrics.value =
+            "أَلِفٌ أَرْنَبْ يَجْرِي يَلْعَبْ\nيَأْكُلُ جَزَرًا كَيْ لَا يَتْعَبْ";
+          fields.verseLyrics.value =
+            "بَاءٌ بَطَّةْ نَطَّتْ نَطَّةْ\nوَقَعَتْ ضَحِكَتْ مِنْهَا الْقِطَّةْ";
+
+          generate();
+        }
+
+        async function copyTextById(id, btnElement) {
+          const text = $(id).textContent;
+          try {
+            await navigator.clipboard.writeText(text);
+          } catch (err) {
+            const area = document.createElement("textarea");
+            area.value = text;
+            document.body.appendChild(area);
+            area.select();
+            document.execCommand("copy");
+            document.body.removeChild(area);
+          }
+
+          if (btnElement) {
+            const originalText = btnElement.textContent;
+            const originalBg = btnElement.style.background;
+            const originalColor = btnElement.style.color;
+
+            btnElement.textContent = "تم النسخ ✔";
+            btnElement.style.background = "#00c58e";
+            btnElement.style.color = "#00170f";
+
+            setTimeout(() => {
+              btnElement.textContent = originalText;
+              btnElement.style.background = originalBg;
+              btnElement.style.color = originalColor;
+            }, 2000);
+          }
+        }
+
+        let lastFocusedTextarea = null;
+        document.querySelectorAll("textarea").forEach((ta) => {
+          ta.addEventListener("focus", () => (lastFocusedTextarea = ta));
+        });
+
+        document.querySelectorAll(".tag-btn[data-tag]").forEach((btn) => {
+          btn.addEventListener("click", (e) => {
+            if (!lastFocusedTextarea) {
+              lastFocusedTextarea = $('verseLyrics');
+            }
+            const tag = e.currentTarget.dataset.tag;
+            const start = lastFocusedTextarea.selectionStart;
+            const text = lastFocusedTextarea.value;
+            lastFocusedTextarea.value =
+              text.substring(0, start) +
+              " " + tag + " \n" +
+              text.substring(lastFocusedTextarea.selectionEnd);
+            lastFocusedTextarea.focus();
+            lastFocusedTextarea.selectionStart = lastFocusedTextarea.selectionEnd =
+              start + tag.length + 3;
+            generate();
+          });
+        });
+
+        document
+          .querySelectorAll("#structurePresetBar .pill")
+          .forEach((pill) => {
+            pill.addEventListener("click", () => {
+              activatePreset(pill.dataset.value);
+              generate();
+            });
+          });
+
+        document.querySelectorAll("input, select, textarea").forEach((node) => {
+          node.addEventListener("change", generate);
+          node.addEventListener("input", generate);
+        });
+
+        document.querySelectorAll("[data-copy]").forEach((btn) => {
+          btn.addEventListener("click", (e) =>
+            copyTextById(btn.dataset.copy, e.currentTarget),
+          );
+        });
+
+        $("generateBtn").addEventListener("click", generate);
+        $("smartPauseBtn").addEventListener("click", generateSmartPauses);
+        $("geminiSplitBtn").addEventListener("click", generateGeminiSplits);
+        $("fillEducationalBtn").addEventListener("click", fillEducationalExample);
+        $("fillKidsBtn").addEventListener("click", fillKidsExample);
+        $("resetBtn").addEventListener("click", () => location.reload());
+        $("copyCombinedBtn").addEventListener("click", (e) =>
+          copyTextById("combinedOutput", e.currentTarget),
+        );
+
+        generate();
+      });
+    </script>
+  </body>
+</html>
