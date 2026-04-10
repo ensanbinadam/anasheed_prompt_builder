@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>مولّد برومبت الإنشاد الاحترافي | Nasheed Prompt Studio V7.4</title>
+    <title>مولّد برومبت الإنشاد الاحترافي | Nasheed Prompt Studio V7.5</title>
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap");
 
@@ -698,30 +698,30 @@
         <div class="hero-top">
           <div>
             <h1>
-              <span>مولّد برومبت الإنشاد الاحترافي (V7.4 المقامات)</span>
+              <span>مولّد برومبت الإنشاد الاحترافي (V7.5)</span>
             </h1>
             <p>
-              التحديث الماسي! تم دمج <strong>المقامات العربية الأصيلة</strong> في واجهة الطابع الموسيقي، حيث يقوم الذكاء الاصطناعي بترجمتها هندسياً لإنتاج (النهاوند، الصبا، الرست، الحجاز، والعجم) بلمسة زر.
+              تحديث الدويتو التفاعلي! 🎙️ تم إضافة خيارات الغناء الثنائي (معلم وطفل / معلمة وطفلة) وخيارات الكورال الطفولي لخلق جو تعليمي تفاعلي (سؤال وجواب) يشد انتباه الطلاب.
             </p>
             <div class="badges">
+              <span class="badge" style="background:#ffca63; color:#000">Vocal Duet & Kids Choir 👨‍👦</span>
               <span class="badge" style="background:#5c33f6">Maqamat AI Translation 🎵</span>
-              <span class="badge" style="background:#ffca63; color:#000">Anti-Stutter Shield 🛡️</span>
               <span class="badge" style="background:#29a8ff">Magic Action Tags ✨</span>
               <span class="badge" style="background:#00c58e; color:#000">Smart Pauses</span>
             </div>
           </div>
           <div class="hero-stats">
             <div class="stat">
+              <b>Teacher & Child</b><span>أصوات دويتو متناوبة (رجل وطفل / امرأة وطفلة) للتعليم التفاعلي</span>
+            </div>
+            <div class="stat">
+              <b>Kids Choir</b><span>إضافة خيارات لكورال الأطفال لترديد اللازمة بحماس طفولي</span>
+            </div>
+            <div class="stat">
               <b>Maqamat</b><span>تضمين المقامات الصوتية (صبا، نهاوند، حجاز...) في خيارات الطابع</span>
             </div>
             <div class="stat">
-              <b>Magic Tags</b><span>إضافة زر (الهمهمة) المفقود لتسهيل تهيئة المقام قبل الكلمات</span>
-            </div>
-            <div class="stat">
-              <b>Line Shield</b><span>وسوم قوية تمنع تخطي ودمج الكلمات للحفاظ على الوزن</span>
-            </div>
-            <div class="stat">
-              <b>Anti-Stutter</b><span>درع سلبي يمنع الآلة من تكرار أنصاف الكلمات (الميليسما الخاطئة)</span>
+              <b>Line Shield</b><span>وسوم قوية تمنع تخطي ودمج الكلمات للحفاظ على الوزن الشعري</span>
             </div>
           </div>
         </div>
@@ -759,12 +759,14 @@
                     </select>
                   </div>
                   <div>
-                    <label for="singerVoice">نوع المنشد</label>
-                    <select id="singerVoice">
+                    <label for="singerVoice" style="color:var(--accent-3);">نوع المنشد (جديد 🎙️)</label>
+                    <select id="singerVoice" style="border-color:var(--accent-3);">
                       <option value="male">رجل / Male</option>
                       <option value="female">امرأة / Female</option>
                       <option value="boy">طفل / Boy</option>
                       <option value="girl">طفلة / Girl</option>
+                      <option value="maleAndBoy">رجل وطفل (دويتو تفاعلي)</option>
+                      <option value="femaleAndGirl">امرأة وطفلة (دويتو تفاعلي)</option>
                     </select>
                   </div>
                   <div>
@@ -778,13 +780,15 @@
                     </select>
                   </div>
                   <div>
-                    <label for="choirSize">حجم الكورال</label>
-                    <select id="choirSize">
+                    <label for="choirSize" style="color:var(--accent-3);">حجم الكورال (جديد 👥)</label>
+                    <select id="choirSize" style="border-color:var(--accent-3);">
                       <option value="none" selected>بدون كورال (منفرد تمامًا)</option>
                       <option value="small">صغير وحميم</option>
                       <option value="medium">متوسط ومتوازن</option>
                       <option value="large">كبير وواسع</option>
                       <option value="massive">ضخم وملحمي</option>
+                      <option value="withChildren">كورال مع أطفال (مبهج)</option>
+                      <option value="kidsOnly">كورال أطفال فقط</option>
                     </select>
                   </div>
                 </div>
@@ -810,8 +814,8 @@
                     </select>
                   </div>
                   <div>
-                    <label for="spirit" style="color:var(--accent-3);">الطابع (المقامات) 🎵</label>
-                    <select id="spirit" style="border-color:var(--accent-3);">
+                    <label for="spirit">الطابع (المقامات) 🎵</label>
+                    <select id="spirit">
                       <option value="none">بدون (لتجنب الإيقاع)</option>
                       <option value="nahawand" selected>عاطفي وشجي (مقام النهاوند)</option>
                       <option value="saba">حزين وروحاني (مقام الصبا)</option>
@@ -1246,6 +1250,8 @@
             female: { en: "female lead vocal" },
             boy: { en: "boy lead vocal" },
             girl: { en: "girl lead vocal" },
+            maleAndBoy: { en: "male and boy vocal duet, alternating voices, teacher and student interaction" },
+            femaleAndGirl: { en: "female and girl vocal duet, alternating voices, teacher and student interaction" },
           },
           energy: {
             none: { en: "" },
@@ -1263,7 +1269,6 @@
           },
           spirit: {
             none: { en: "" },
-            // إضافة ترجمات المقامات الدقيقة
             nahawand: { en: "emotional melancholic, cinematic minor key, sweet sorrow, deep feelings" },
             saba: { en: "deep sorrow, grieving vocal, highly emotional, solemn microtonal" },
             rast: { en: "traditional middle eastern vocal, balanced mood, major key storyteller" },
@@ -1287,6 +1292,8 @@
             medium: { en: "medium choir" },
             large: { en: "large wide choir" },
             massive: { en: "massive choir" },
+            withChildren: { en: "mixed choir with children voices" },
+            kidsOnly: { en: "children choir only" },
           },
           leadCharacter: {
             none: { en: "" },
@@ -1543,16 +1550,17 @@
 
         function fillEducationalExample() {
           fields.nasheedType.value = "educational";
-          fields.singerVoice.value = "male";
+          fields.singerVoice.value = "maleAndBoy";
           fields.customTheme.value = "Joy of learning, seeking knowledge";
           fields.energy.value = "balanced";
           fields.tempo.value = "mid";
           fields.spirit.value = "joyful";
           fields.vocalTexture.value = "soloChoir";
-          fields.choirSize.value = "medium";
+          fields.choirSize.value = "withChildren";
           fields.leadCharacter.value = "bright";
 
           activatePreset("short");
+          // تفعيل الحماية
           document.querySelectorAll('.allowedFx[value*="strict line-by-line"]').forEach(n => n.checked = true);
 
           fields.chorusLyrics.value =
@@ -1564,7 +1572,7 @@
 
         function fillKidsExample() {
           fields.nasheedType.value = "children";
-          const voices = ["male", "female", "boy", "girl"];
+          const voices = ["maleAndBoy", "femaleAndGirl", "boy", "girl"];
           fields.singerVoice.value =
             voices[Math.floor(Math.random() * voices.length)];
           fields.customTheme.value =
@@ -1574,11 +1582,12 @@
           fields.tempo.value = "slow";
           fields.spirit.value = "none";
           fields.vocalTexture.value = "dryRaw";
-          fields.choirSize.value = "none";
+          fields.choirSize.value = "kidsOnly";
           fields.leadCharacter.value = "bright";
 
           activatePreset("kids");
           
+          // تعطيل كل المؤثرات ما عدا درع الحماية
           document.querySelectorAll(".allowedFx").forEach((n) => {
             if(n.value.includes("strict")) {
                n.checked = true;
